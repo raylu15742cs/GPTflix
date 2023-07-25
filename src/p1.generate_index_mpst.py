@@ -3,32 +3,29 @@ import warnings
 
 # Third Party Libraries
 import pandas as pd
-import tiktoken
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
-def num_tokens_from_string(string, encoding_name: str = "cl100k_base"):
-    """Returns the number of tokens in a text string."""
-    encoding = tiktoken.get_encoding(encoding_name)
-    num_tokens = len(encoding.encode(string))
-    return num_tokens
-
 
 def combine_text_to_one_column(df):
     df["gpttext"] = (
-        "Title: "
-        + df["title"].astype(str)
-        + " tags: "
-        + df["tags"].astype(str)
-        + " Plot / story / about: "
-        + df["plot_synopsis"].astype(str)
+        "team_id: "
+        + df["team_id"].astype(str)
+        + " city: "
+        + df["city"].astype(str)
+        + " nickname: "
+        + df["nickname"].astype(str)
+        + " year_founded: "
+        + df["year_founded"].astype(str)
+        + " year_active_till: "
+        + df["year_active_till"].astype(str)
     )
 
-    df = df.drop(df.columns[[0, 1, 2, 3, 4, 5]], axis=1)
+    df = df.drop(df.columns[[0, 1, 2, 3, 4]], axis=1)
 
-    df.to_csv(f"data_sample/d1.mpst_1k_converted.csv")
+    df.to_csv(f"../data_sample/team_history_converted.csv")
 
 
 if __name__ == "__main__":
@@ -40,7 +37,7 @@ if __name__ == "__main__":
 
     # read sample data
     df = pd.read_csv(
-        filepath_or_buffer="data_sample/d0.mpst_1k_raw.csv",
+        filepath_or_buffer="../data_sample/team_history.csv",
         sep=",",
         header=0,
         dtype="string",

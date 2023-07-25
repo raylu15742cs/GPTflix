@@ -34,18 +34,17 @@ def check_p3_results():
 def check_p5_results_query_pinecone(
     ids: list,
     index_name: str,
-    namespace: str = "movies",
 ):
     """This function will return a specific vector id back from the index."""
     dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
     load_dotenv(dotenv_path)
 
     pinecone.init(
-        api_key=os.environ.get("PINECONE_API_KEY"), environment="us-east1-gcp"
+        api_key=os.environ.get("PINECONE_API_KEY"), environment="us-west1-gcp-free"
     )
     index = pinecone.Index(index_name)
 
-    fetch_response = index.fetch(ids=ids, namespace=namespace)
+    fetch_response = index.fetch(ids=ids)
     for i, id in enumerate(ids):
         print(
             f'Vector Id: {ids[i]}\n{fetch_response["vectors"][ids[i]]["metadata"]["text"]}\n\n'
@@ -58,4 +57,4 @@ if __name__ == "__main__":
 
     # index starts at 0
     # check data from d4.csv matches the index in pinecone
-    check_p5_results_query_pinecone(ids=["9"], index_name="1kmovies")
+    check_p5_results_query_pinecone(ids=["10"], index_name="1kmovies")

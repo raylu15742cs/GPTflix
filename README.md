@@ -72,7 +72,7 @@ These are the steps:
 
 [//]: # 
 
-    python src/p3.api_request_parallel_processor.py \
+    python3 src/op3.api_request_parallel_processor.py \
       --requests_filepath data_sample/d2.embeddings_maker.jsonl \
       --save_filepath data_sample/d3.embeddings_maker_results.jsonl \
       --request_url https://api.openai.com/v1/embeddings \

@@ -8,10 +8,10 @@ import pandas as pd
 # which can be loaded and processed by api_request_parallel_processor.py
 # to generate the embeddings which we will use for vector search!
 
-df2 = pd.read_csv("data_sample/d1.mpst_1k_converted.csv")
+df2 = pd.read_csv("../data_sample/team_history_converted.csv")
 
 
-filename = "data_sample/d2.embeddings_maker.jsonl"
+filename = "../data_sample/d2.embeddings_maker.jsonl"
 jobs = [
     {"model": "text-embedding-ada-002", "input": str(row[1])}
     for index, row in df2.iterrows()

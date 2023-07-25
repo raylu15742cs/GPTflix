@@ -12,7 +12,7 @@ class PineconeUpload:
         pinecone_api_key,
         index_name,
         embeddings_csv,
-        embedding_dims: 1536,
+        embedding_dims= 1536,
         create_index: bool = False,
     ) -> None:
         self.pinecone_api_key = pinecone_api_key
@@ -37,7 +37,7 @@ class PineconeUpload:
     def make_pinecone_index(self):
         """Create the pinecone index."""
 
-        pinecone.init(api_key=self.pinecone_api_key, environment="us-east1-gcp")
+        pinecone.init(api_key=self.pinecone_api_key, environment="us-west1-gcp-free")
 
         if self.create_index:
             # Create an empty index if required
@@ -64,7 +64,7 @@ class PineconeUpload:
         ]
 
         # Upsert the embeddings in batch
-        upsert_response = self.pinecone_index.upsert(vectors=upsert_requests, namespace="movies")
+        upsert_response = self.pinecone_index.upsert(vectors=upsert_requests)
 
         return upsert_response
 
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     index_name = "1kmovies"
     embeddings_csv = "data_sample/d4.embeddings_maker_results.csv"
     embedding_dims = 1536
-    create_index = True
+    create_index = False
 
     pinecone = PineconeUpload(
         pinecone_api_key=os.environ.get("PINECONE_API_KEY"),
