@@ -37,7 +37,7 @@ def randomize_array(arr):
 
 st.set_page_config(page_title="GPTflix", page_icon="🍿", layout="wide")
 
-st.header("GPTflix is like chatGPT for movie reviews!🍿\n")
+st.header("BasketballGPT is like chatGPT for basketball nerds!🍿\n")
 
 
 # st.header("Thanks for visiting GPTflix! It's been a fun experiment, with over 4000 unique users over four weeks and an average of 10 questions per user while the site was online! Perhaps we will be back some time...🍿\n")
@@ -77,12 +77,12 @@ github_url = "https://github.com/stephansturges/GPTflix"
 with st.sidebar:
     st.markdown("# About 🙌")
     st.markdown(
-        "GPTflix allows you to talk to version of chatGPT \n"
-        "that has access to reviews of about 10 000 movies! 🎬 \n"
+        "BasketballGPT allows you to talk to version of chatGPT \n"
+        "that has access to basketball statistics!  \n"
         "Holy smokes, chatGPT and 10x cheaper??! We are BACK! 😝\n"
         )
     st.markdown(
-        "Unline chatGPT, GPTflix can't make stuff up\n"
+        "Unline chatGPT, BasketballGPT can't make stuff up\n"
         "and will only answer from injected knowlege 👩‍🏫 \n"
     )
     st.markdown("---")
@@ -171,8 +171,8 @@ def construct_prompt_pinecone(question):
     
     header = """Answer the question as truthfully as possible using the provided context, 
     and if the answer is not contained within the text below, say "I don't know."
-    Answer in a very sarcastic tone and make it fun! Surprise the user with your answers. You can give long answers tangentially related to the movie.\n
-    You are GPTflix, a AI movie-buff that loves talking about movies!\n
+    Answer in a very history who likes to give percise answers.\n
+    You are BasketballGPT, a AI basketball nerd that loves talking about basketball!\n
     Context:\n
     """ 
     return header + "".join(chosen_sections) 
@@ -189,7 +189,7 @@ def summarize_past_conversation(content):
         "model": COMPLETIONS_MODEL,
     }
 
-    prompt = "Summarize this discussion into a single paragraph keeping the titles of any movies mentioned: \n" + content
+    prompt = "Summarize this discussion into a single paragraph: \n" + content
 
     try:
         response = openai.Completion.create(
@@ -259,7 +259,7 @@ def clear_text():
 
 # We will get the user's input by calling the get_text function
 def get_text():
-    input_text = st.text_input("Input a question here! For example: \"Is X movie good?\". \n It works best if your question contains the title of a movie! You might want to be really specific, like talking about Pixar's Brave rather than just Brave. Also, I have no memory of previous questions!😅😊","Who are you?", key="input")
+    input_text = st.text_input("Input a question here! For example: \"What year did this team join?\". \n It works best if your question contains specifics. Also, I have no memory of previous questions!😅😊","Who are you?", key="input")
     return input_text
 
 
