@@ -5,15 +5,14 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-
 class PineconeUpload:
     def __init__(
         self,
         pinecone_api_key,
         index_name,
         embeddings_csv,
-        embedding_dims= 1536,
-        create_index: bool = False,
+        embedding_dims=1536,
+        create_index=False,
     ) -> None:
         self.pinecone_api_key = pinecone_api_key
         self.index_name = index_name
@@ -23,35 +22,28 @@ class PineconeUpload:
         self.pinecone_index = self.make_pinecone_index()
 
     def get_first_4000_chars(self, s):
-        """
-        We are using a function to limit the metadata character length to 4000 here.
-        The reason is that there is a limit on the size of metadata that you can append
-        to a vector on pinecone, currently I believe it's 10Kb... You could go with more
-        than 4000 and give it a try.
-        """
+        """Limit metadata character length to 4000."""
         if len(s) > 4000:
             return s[:4000]
         else:
             return s
 
     def make_pinecone_index(self):
-        """Create the pinecone index."""
-
+        """Create the Pinecone index."""
         pinecone.init(api_key=self.pinecone_api_key, environment="us-west1-gcp-free")
 
         if self.create_index:
             # Create an empty index if required
             pinecone.create_index(name=self.index_name, dimension=self.embedding_dims)
-        
+
         index = pinecone.Index(self.index_name)
 
-        # Get info about our new pinecone index.
+        # Get info about our new Pinecone index.
         print(f"Pinecone index info: {pinecone.whoami()} \n")
         return index
 
     def upsert_embeddings_batch(self, starting_index, data_batch, index_offset):
-        """Define a function to upsert embeddings in batches."""
-
+        """Upsert embeddings in batches."""
         # Convert the data to a list of Pinecone upsert requests
         upsert_requests = [
             (
@@ -64,8 +56,7 @@ class PineconeUpload:
         ]
 
         # Upsert the embeddings in batch
-        upsert_response = self.pinecone_index.upsert(vectors=upsert_requests)
-
+        upsert_response = self.pinecone_index.upsert(vectors=upsert_requests, append=True)
         return upsert_response
 
     def upsert_embeddings_to_index(self):
@@ -75,34 +66,38 @@ class PineconeUpload:
             next(reader)  # skip header row
             data = list(reader)
 
+        # Get the current total number of vectors in the index
+        current_vector_count = self.pinecone_index.describe_index_stats().get('total_vector_count', 0)
+
         # Upsert the embeddings in batches
         batch_size = 100
         index_offset = 0
         while index_offset < len(data):
-            batch = data[index_offset : index_offset + batch_size]
+            batch = data[index_offset: index_offset + batch_size]
 
-            ## APPEND VECTORS TO INDEX AFTER LAST ENTRIES
-            # upsert_embeddings_batch( int(index.describe_index_stats()['total_vector_count'] +1) ,batch, index_offset)
-
-            ## REPLACE VECTORS STATING AT 0
-            self.upsert_embeddings_batch(0, batch, index_offset)
+            # Append vectors to index using the current vector count as the starting index
+            self.upsert_embeddings_batch(current_vector_count, batch, index_offset)
             print("batch " + str(index_offset))
+
+            # Increment the offset by the batch size and update the current vector count
             index_offset += batch_size
-        print(f"Total vectors in the index: {self.pinecone_index.describe_index_stats()['total_vector_count']}")
+            current_vector_count += len(batch)
+
+        print(f"Total vectors in the index: {self.pinecone_index.describe_index_stats().get('total_vector_count', 0)}")
 
 
 if __name__ == "__main__":
     dotenv_path = join(dirname(__file__), '.env')
-    info = load_dotenv(dotenv_path)
+    load_dotenv(dotenv_path)
 
     # Define the name of the index and the dimensionality of the embeddings
     index_name = "1kmovies"
-    embeddings_csv = "data_sample/d4.embeddings_maker_results.csv"
+    embeddings_csv = "data_sample/bigd4.embeddings_maker_results.csv"
     embedding_dims = 1536
     create_index = False
 
     pinecone = PineconeUpload(
-        pinecone_api_key=os.environ.get("PINECONE_API_KEY"),
+        pinecone_api_key=os.getenv("PINECONE_API_KEY"),
         index_name=index_name,
         embeddings_csv=embeddings_csv,
         embedding_dims=embedding_dims,

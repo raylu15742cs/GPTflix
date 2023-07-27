@@ -86,7 +86,8 @@ with st.sidebar:
         "and will only answer from injected knowlege 👩‍🏫 \n"
     )
     st.markdown("---")
-    st.markdown("A side project by Stephan Sturges")
+    st.markdown("A mod project by Raymond Lu")
+    st.markdown("Orginal project by Stephan Sturges")
     st.markdown("Kept online by [Ben's Bites](%s)!" %bb_url)
     st.image(bens_bites_logo, width=60)
 

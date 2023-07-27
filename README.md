@@ -60,21 +60,21 @@ These are the steps:
 
 [//]: # 
 
-        python p1.generate_index_mpst.py
+        python3 src/p1.generate_index_mpst.py
 
 2. Run `p2.make_jsonl_for_requests_mpst.py` to convert your new `d1.mpst_1k_converted.csv` file to a jsonl file with instructions to run the embeddings requests against the OpenAI API.
 
 [//]: # 
 
-        python p2.make_jsonl_for_requests_mpst.py
+        python3 src/p2.make_jsonl_for_requests_mpst.py
 
 3. Run `p3.api_request_parallel_processor.py` on the JSONL file from (2) to get embeddings.
 
 [//]: # 
 
-    python3 src/op3.api_request_parallel_processor.py \
-      --requests_filepath data_sample/d2.embeddings_maker.jsonl \
-      --save_filepath data_sample/d3.embeddings_maker_results.jsonl \
+    python3 src/p3.api_request_parallel_processor.py \
+      --requests_filepath data_sample/bigd2.embeddings_maker.jsonl \
+      --save_filepath data_sample/bigd3.embeddings_maker_results.jsonl \
       --request_url https://api.openai.com/v1/embeddings \
       --max_requests_per_minute 1500 \
       --max_tokens_per_minute 6250000 \
@@ -87,13 +87,13 @@ These are the steps:
 
 [//]: # 
 
-        python p4.convert_jsonl_with_embeddings_to_csv.py
+        python3 src/p4.convert_jsonl_with_embeddings_to_csv.py
 
 5. Run `p5.upload_to_pinecone.py` with your api key and database settings to upload all that text data and embeddings.
 
 [//]: # 
 
-        python p5.upload_to_pinecone.py
+        python3 src/p5.upload_to_pinecone.py
 
 You can run the app locally but you'll need to remove the images (the paths are different on streamlit cloud)
 
