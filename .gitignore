@@ -5,6 +5,12 @@
 chat/*.env
 .env
 
+*.csv
+
+*.jsonl
+
+
+
 settings.json
 
 data_sample/d*
