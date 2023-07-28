@@ -30,7 +30,7 @@ class PineconeUpload:
 
     def make_pinecone_index(self):
         """Create the Pinecone index."""
-        pinecone.init(api_key=self.pinecone_api_key, environment="us-west1-gcp-free")
+        pinecone.init(api_key=self.pinecone_api_key, environment="asia-southeast1-gcp-free")
 
         if self.create_index:
             # Create an empty index if required
