@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     # Define the name of the index and the dimensionality of the embeddings
     index_name = "1kmovies"
-    embeddings_csv = "data_sample/bigd4.embeddings_maker_results.csv"
+    embeddings_csv = "data_sample/playerd4.embeddings_maker_results.csv"
     embedding_dims = 1536
     create_index = False
 

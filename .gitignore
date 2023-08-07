@@ -9,7 +9,7 @@ chat/*.env
 
 *.jsonl
 
-
+*.pyc
 
 settings.json
 

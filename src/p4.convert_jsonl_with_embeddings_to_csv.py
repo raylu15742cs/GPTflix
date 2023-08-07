@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 
-filename = "data_sample/bigd3.embeddings_maker_results.jsonl"
+filename = "data_sample/playerd3.embeddings_maker_results.jsonl"
 
 with open(os.path.abspath(filename), "r", encoding="utf-8") as f:
     data = [
@@ -100,5 +100,5 @@ def chonk_dataframe_and_make_csv_with_embeds(pddf, outputfile, chunks):
 if __name__ == "__main__":
 
     chonk_dataframe_and_make_csv_with_embeds(
-        df, "data_sample/bigd4.embeddings_maker_results.csv", 1000
+        df, "data_sample/playerd4.embeddings_maker_results.csv", 1000
     )

@@ -73,8 +73,8 @@ These are the steps:
 [//]: # 
 
     python3 src/p3.api_request_parallel_processor.py \
-      --requests_filepath data_sample/bigd2.embeddings_maker.jsonl \
-      --save_filepath data_sample/bigd3.embeddings_maker_results.jsonl \
+      --requests_filepath data_sample/playerd2.embeddings_maker.jsonl \
+      --save_filepath data_sample/playerd3.embeddings_maker_results.jsonl \
       --request_url https://api.openai.com/v1/embeddings \
       --max_requests_per_minute 1500 \
       --max_tokens_per_minute 6250000 \

@@ -11,7 +11,7 @@ import pandas as pd
 df2 = pd.read_csv("data_sample/converted_common_player_info.csv")
 
 
-filename = "data_sample/bigd2.embeddings_maker.jsonl"
+filename = "data_sample/playerd2.embeddings_maker.jsonl"
 jobs = [
     {"model": "text-embedding-ada-002", "input": str(row[1])}
     for index, row in df2.iterrows()
